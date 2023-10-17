@@ -1,0 +1,6 @@
+ID,Nombre,Fecha de nacimiento,Ciudad de nacimiento,Direccion,Telefono,Correo electronico
+8394697,Juan,4/5/1999,La Dorada,Gardel-45-84-Manrique-Medellin,3214788484,juan@unal.edu.com
+8394699,Pedro,15/8/2000,Medellin,Colombia-30-50-Poblado-Medellin,3152345989,pedro123@123.com
+43818740,Felipe,15/5/2000,Pasto,Ayacucho-41-32-Candelaria-Medellin,3145671010,pipe@mail.com
+43818747,Luisa,31/1/2005,Concordia,Gardel-45-84 Manrique-Medellin-Medellin,3124561515,luisa@unal.edu.co
+1001140280,Andres,12/12/1999,Valle,Carabobo-41-32-Candelaria-Medellin,3210988989,andres@unal.com
