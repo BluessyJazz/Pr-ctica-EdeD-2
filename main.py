@@ -5,7 +5,7 @@ from datos.registro import Registro
 from datos.usuario import Usuario
 
 #Ubicación del CSV
-filename = "txt/datos.txt"
+filename = "txt/Empleados.txt"
 
 def mostrar_menu():
     print("\nMENU:")
