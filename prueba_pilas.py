@@ -5,6 +5,7 @@ my_stack = Stack()
 
 # Apilar elementos
 my_stack.push(1)
+print(my_stack.items())
 my_stack.push(2)
 my_stack.push(3)
 

@@ -1,6 +1,8 @@
 import csv
+from datos.direccion import Direccion
 from datos.fecha import Fecha
 from datos.registro import Registro
+from datos.usuario import Usuario
 
 #Ubicación del CSV
 filename = "txt/datos.txt"

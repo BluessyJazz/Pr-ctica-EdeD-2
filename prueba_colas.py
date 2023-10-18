@@ -16,12 +16,14 @@ assert my_queue.first() == 1
 
 # Desencolar elementos
 my_queue.dequeue()
-my_queue.dequeue()
+print(my_queue.first())
+print(my_queue.dequeue())
+print(my_queue.first())
 
 # Verificar el primer elemento actualizado
 assert my_queue.first() == 3
 
-# Verificar si la cola está vacía
+# Verificar que la cola no está vacía
 assert not my_queue.is_empty()
 
 print("Pruebas de cola exitosas.")
