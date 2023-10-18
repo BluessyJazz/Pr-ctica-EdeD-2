@@ -3,53 +3,27 @@ from datos.fecha import Fecha
 from datos.direccion import Direccion
 from datos.usuario import Usuario
 
+from .list import List  # Asegúrate de tener la implementación de la clase List disponible
+
 class Registro:
-    def __init__(self, capacity):
-        self.registro = [None] * capacity
-        self.noRegistros = 0
-    
-    def agregar(self, usuario):
-        # Comprobar si hay espacio en el arreglo
-        if self.noRegistros == len(self.registro):
-            print("No hay espacio para agregar más usuarios.")
+    def __init__(self):
+        self.registro = List()  # Inicializa la lista enlazada
+
+    def agregarUsuario(self, usuario):
+        if self.registro.search(usuario.id):
+            print(f"Ya existe un usuario con el ID {usuario.id}.")
             return False
-
-        # Comprobar si ya existe un usuario con el mismo ID
-        for i in range(self.noRegistros):
-            if self.registro[i].id == usuario.id:
-                print(f"Ya existe un usuario con el ID {usuario.id}.")
-                return False
-
-        # Agregar el usuario en orden ascendente por ID
-        i = self.noRegistros - 1
-        while i >= 0 and self.registro[i].id > usuario.id:
-            self.registro[i + 1] = self.registro[i]
-            i -= 1
-        self.registro[i + 1] = usuario
-        self.noRegistros += 1
+        self.registro.add(usuario)
         return True
 
-    def eliminar(self, id):
-        pos = self.buscarPosicion(id)
-        if pos != -1:
-            usuario_eliminado = self.registro[pos]
-            for i in range(pos, self.noRegistros - 1):
-                self.registro[i] = self.registro[i + 1]
-            self.registro[self.noRegistros - 1] = None
-            self.noRegistros -= 1
-            return usuario_eliminado
+    def eliminarUsuario(self, id):
+        if self.registro.search(id):
+            return self.registro.remove(id)
         return None
 
-    def buscarPosicion(self, id):
-        for i in range(self.noRegistros):
-            if self.registro[i].id == id:
-                return i
-        return -1
-
     def buscarUsuario(self, id):
-        pos = self.buscarPosicion(id)
-        if pos != -1:
-            return self.registro[pos]
+        if self.registro.search(id):
+            return self.registro.search(id).data
         return None
 
     def toFile(self, filename):
@@ -60,22 +34,20 @@ class Registro:
             writer.writerow(["ID", "Nombre", "Fecha de nacimiento", "Ciudad de nacimiento", "Direccion", "Telefono", "Correo electronico"])
 
             # Escribir los datos de los usuarios
-            for i in range(self.noRegistros):
-                usuario = self.registro[i]
+            current = self.registro.head
+            while current:
+                usuario = current.data
 
                 # Formatear la dirección con espacios en lugar de comas
                 direccion_str = f"{usuario.dir.calle}-{usuario.dir.noCalle}-{usuario.dir.nomenclatura}-{usuario.dir.barrio}-{usuario.dir.ciudad}"
 
                 writer.writerow([usuario.id, usuario.nombre, usuario.fecha_nac.obtener_fecha(),
                                 usuario.ciudad_nac, direccion_str, usuario.tel, usuario.email])
-
+                current = current.next
 
     def importar(self, filename):
-
-
         with open(filename, "r", newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
-            self.noRegistros = 0
             for row in reader:
                 id = int(row['ID'])
                 nombre = row['Nombre']
@@ -98,5 +70,3 @@ class Registro:
 
                 usuario = Usuario(id, nombre, fecha_nac, ciudad_nac, dir, tel, email)
                 self.agregar(usuario)
-
-    
