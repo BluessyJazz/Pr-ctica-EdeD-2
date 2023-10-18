@@ -7,9 +7,9 @@ class Queue:
     def is_empty(self):
         return self.items.is_empty()
 
-'''    def enqueue(self, item):
-        self.items.add(item)
-'''
+    '''def enqueue(self, item):
+            self.items.add(item)
+    '''
 
     # Modificación del método enqueue en la implementación de Queue
     def enqueue(self, item):
