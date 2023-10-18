@@ -1,4 +1,3 @@
-
 from listas.list import List
 
 class Stack:

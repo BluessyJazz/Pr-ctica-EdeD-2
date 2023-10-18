@@ -7,9 +7,10 @@ class Queue:
     def is_empty(self):
         return self.items.is_empty()
 
-    '''def enqueue(self, item):
-            self.items.add(item)
-    '''
+    
+    #def enqueue(self, item):
+    #    self.items.add(item)
+    
 
     # Modificación del método enqueue en la implementación de Queue
     def enqueue(self, item):
@@ -20,6 +21,12 @@ class Queue:
             while current.get_next() is not None:
                 current = current.get_next()
             current.set_next(Node(item))
+    '''
+    def add(self, item):
+        temp = Node(item)
+        temp.set_next(self.head)
+        self.head = temp
+    '''
 
     def dequeue(self):
         if self.is_empty():
