@@ -1,4 +1,9 @@
-from listas.list import List
+'''import sys
+
+sys.path.append("..")'''
+from practica_eded_2.listas.list import List
+
+'''.listas.list import List'''
 
 class Stack:
     def __init__(self):

@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("..")
+
 from listas.list import List
 
 # Crear una lista
@@ -25,3 +29,5 @@ assert my_list.search(3) is True
 assert my_list.search(2) is False
 
 print("Pruebas de lista exitosas.")
+
+
