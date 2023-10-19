@@ -18,10 +18,10 @@ class Sistema:
         self.draft_stack = Stack()  # Pila de borradores
 
     def agregarEmpleado(self, empleado):
-        if self.empleados.search(empleado.id):
+        if self.buscarUsuario(empleado.id):
             print(f"Ya existe un usuario con el ID {empleado.id}.")
             return False
-        self.empleados.addOrder(empleado.id)
+        self.empleados.addOrder(empleado)
         self.noEmpleados +=1
         return True
 
@@ -31,13 +31,16 @@ class Sistema:
             self.noEmpleados -= 1
         return None
 
+      
     def buscarUsuario(self, id):
-        if self.empleados.search(id):
-            return self.empleados.search(id).data
+        current = self.empleados.head
+        while current:
+            if current.data.id == id:
+                return current.data
+            current = current.next
         return None
-    
-    def cargarEmpleados(self, archivo_empleados):
 
+    def cargarEmpleados(self, archivo_empleados):
         with open(archivo_empleados, "r", newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             self.noEmpleados = 0
@@ -65,23 +68,24 @@ class Sistema:
                 self.agregarEmpleado(empleado)
 
     def cargarPassword(self, archivo_password):
+        
         with open(archivo_password, 'r') as file:
             for line in file:
-                data = line.split()
+                data = [x.strip() for x in line.split(" ")]
                 id = data[0]
                 password = data[1]
                 cargo = data[2]
 
-                if self.buscarUsuario(id):
-                    self.empleado.setPassword(password)
-                    self.empleado.setCargo(cargo)
-                    
-                '''# Buscar el empleado por su ID en la lista de empleados
-                for empleado in self.empleados:
-                    if empleado.id == id:
-                        empleado.setPassword(password)
-                        empleado.setCargo(cargo)'''
+                print(id)
 
+               # Buscar empleado por ID en la lista de empleados
+                current_node = self.empleados.head
+                while current_node is not None:
+                    if current_node.data.getId() == int(id):
+                        current_node.data.setPassword(password)
+                        current_node.data.setCargo(cargo)
+                        break
+                    current_node = current_node.next
 
     def verificar_credenciales(self, id, password):
         for empleado in self.empleados:
