@@ -64,25 +64,23 @@ class Mensajeria:
                 self.agregarEmpleado(empleado)
                 self.noEmpleados +=1
 
-    def cargar_password(self, archivo_password):
+    def cargarPassword(self, archivo_password):
         with open(archivo_password, 'r') as file:
             for line in file:
                 data = line.split()
                 id = data[0]
                 password = data[1]
-                role = data[2]
-                # Crear objetos de tipo Empleado o Administrador en función del role
-                if role == 'empleado':
-                    empleado = Empleado(id, password)
-                    self.employee_list.append(empleado)
-                elif role == 'administrador':
-                    administrador = Administrador(id, password)
-                    self.employee_list.append(administrador)
+                cargo = data[2]
+                # Buscar el empleado por su ID en la lista de empleados
+                for empleado in self.employee_list:
+                    if empleado.id == id:
+                        empleado.password(password)
+                        empleado.cargo(cargo)
 
 
-    def verificar_credenciales(self, id, password):
+    '''def verificar_credenciales(self, id, password):
         # Implementación para verificar las credenciales del usuario
-            def verificar_credenciales(self, id, password):
+    def verificar_credenciales(self, id, password):
         for empleado in self.employee_list:
             if empleado.id == id and empleado.password == password:
                 return empleado
@@ -107,3 +105,4 @@ class Mensajeria:
             # Actualiza el archivo Password.txt
         else:
             print("No tienes los permisos necesarios para realizar esta acción.")
+'''
