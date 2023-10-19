@@ -9,9 +9,10 @@ from .fecha import Fecha
 from .direccion import Direccion
 from .registro import Registro
 
-class Mensajeria:
+class Sistema:
     def __init__(self):
-        self.empleados = List()  # Lista de empleados
+        self.empleados = DoubleList()  # Lista de empleados
+        self.passwords = DoubleList()
         self.noEmpleados = 0
         self.message_queue = Queue()  # Cola de mensajes leídos
         self.draft_stack = Stack()  # Pila de borradores
@@ -20,7 +21,7 @@ class Mensajeria:
         if self.empleados.search(empleado.id):
             print(f"Ya existe un usuario con el ID {empleado.id}.")
             return False
-        self.empleados.add(empleado)
+        self.empleados.addOrder(empleado.id)
         self.noEmpleados +=1
         return True
 
@@ -62,7 +63,6 @@ class Mensajeria:
 
                 empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email, None, None)
                 self.agregarEmpleado(empleado)
-                self.noEmpleados +=1
 
     def cargarPassword(self, archivo_password):
         with open(archivo_password, 'r') as file:
@@ -71,11 +71,16 @@ class Mensajeria:
                 id = data[0]
                 password = data[1]
                 cargo = data[2]
-                # Buscar el empleado por su ID en la lista de empleados
+
+                if self.buscarUsuario(id):
+                    self.empleado.setPassword(password)
+                    self.empleado.setCargo(cargo)
+                    
+                '''# Buscar el empleado por su ID en la lista de empleados
                 for empleado in self.empleados:
                     if empleado.id == id:
-                        empleado.password(password)
-                        empleado.cargo(cargo)
+                        empleado.setPassword(password)
+                        empleado.setCargo(cargo)'''
 
 
     def verificar_credenciales(self, id, password):
