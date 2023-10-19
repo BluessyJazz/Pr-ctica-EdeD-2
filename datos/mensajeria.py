@@ -7,7 +7,7 @@ from .empleados import Empleado
 from .admin import Administrador
 from .fecha import Fecha
 from .direccion import Direccion
-from registro import Registro
+from .registro import Registro
 
 class Mensajeria:
     def __init__(self):
@@ -17,7 +17,7 @@ class Mensajeria:
         self.draft_stack = Stack()  # Pila de borradores
 
     def agregarEmpleado(self, empleado):
-        if self.registro.search(empleado.id):
+        if self.empleados.search(empleado.id):
             print(f"Ya existe un usuario con el ID {empleado.id}.")
             return False
         self.empleados.add(empleado)
@@ -60,7 +60,7 @@ class Mensajeria:
                 tel = int(row['Telefono'])
                 email = row['Correo electronico']
 
-                empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email)
+                empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email, None, None)
                 self.agregarEmpleado(empleado)
                 self.noEmpleados +=1
 
@@ -72,16 +72,14 @@ class Mensajeria:
                 password = data[1]
                 cargo = data[2]
                 # Buscar el empleado por su ID en la lista de empleados
-                for empleado in self.employee_list:
+                for empleado in self.empleados:
                     if empleado.id == id:
                         empleado.password(password)
                         empleado.cargo(cargo)
 
 
-    '''def verificar_credenciales(self, id, password):
-        # Implementación para verificar las credenciales del usuario
     def verificar_credenciales(self, id, password):
-        for empleado in self.employee_list:
+        for empleado in self.empleados:
             if empleado.id == id and empleado.password == password:
                 return empleado
         return None
@@ -105,4 +103,3 @@ class Mensajeria:
             # Actualiza el archivo Password.txt
         else:
             print("No tienes los permisos necesarios para realizar esta acción.")
-'''

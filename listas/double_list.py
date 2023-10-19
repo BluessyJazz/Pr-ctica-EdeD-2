@@ -1,4 +1,4 @@
-from double_node import DoubleNode
+from .double_node import DoubleNode
 
 class DoubleList:
     def __init__(self):
