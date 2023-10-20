@@ -5,6 +5,7 @@ from listas.double_list import DoubleList  # Importa la clase DoubleList para us
 from dequeues.stack import Stack  # Importa la clase Stack para usarla en el sistema de mensajería
 from dequeues.queue import Queue  # Importa la clase Queue para usarla en el sistema de mensajería
 from .empleados import Empleado
+from .usuario import Usuario
 from .admin import Administrador
 from .fecha import Fecha
 from .direccion import Direccion
@@ -18,19 +19,40 @@ class Sistema:
         self.draft_stack = Stack()  # Pila de borradores
 
     def agregarEmpleado(self, empleado):
-        if self.buscarUsuario(empleado.id):
-            print(f"Ya existe un usuario con el ID {empleado.id}.")
+        # Agregar un nuevo usuario
+        id = int(input("ID del usuario: "))
+
+        if self.buscarUsuario(id):
+            print(f"Ya existe un usuario con el ID {id}.")
             return False
-        self.empleados.addOrder(empleado)
-        self.noEmpleados +=1
-        self.createtxt(empleado.id)
+
+        else:         
+            nombre = input("Nombre del usuario: ")
+            fecha_nac = Fecha(*map(int, input("Fecha de nacimiento (dd/mm/aaaa): ").split("/")))
+            ciudad_nac = input("Ciudad de nacimiento: ")
+            dir = Direccion(*input("Dirección (calle, noCalle, nomenclatura, barrio, ciudad): ").split(", "))
+            tel = int(input("Teléfono: "))
+            email = input("Correo electrónico: ")
+
+            cargo = input("Usuario: ¿empleado o administrador?: ")
+            password = input("Ingrese la contraseña: ")
+
+            empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email, cargo, password)
+
+            self.empleados.addOrder(empleado)
+            self.noEmpleados +=1
+            self.createtxt(empleado.id)
+            
+            print("Usuario agregado con éxito.")
+       
         return True
 
     def eliminarEmpleado(self, id, empleado):
         if empleado.cargo == "administrador":
             if self.empleados.search(id):
-                return self.empleados.remove(id)
                 self.noEmpleados -= 1
+                return self.empleados.remove(id)
+                
         return None
       
     def buscarUsuario(self, id):
@@ -66,8 +88,11 @@ class Sistema:
                 email = row['Correo electronico']
 
                 empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email, None, None)
-                self.agregarEmpleado(empleado)
-
+                
+                self.empleados.addOrder(empleado)
+                self.noEmpleados +=1
+                self.createtxt(empleado.id)
+        return "Todos los empleados fueron cargados con éxito"
 
     def cargarPassword(self, archivo_password):
         
@@ -110,15 +135,14 @@ class Sistema:
                 file.write(line)
 
     def verificarAcceso(self, id, password):
-        current = self.buscarUsuario(id)
-        print(current)
+        current = self.buscarUsuario(int(id))
         if current.data.password == password:
             return current.data.cargo
         return None
     
     def createtxt(self, id):
         carpeta_destino = "./txt"
-        nombre_archivo = f"{id}.txt"
+        nombre_archivo = f"{str(id)}.txt"
         ruta_completa = os.path.join(carpeta_destino, nombre_archivo)
         
         # Verificar si el archivo ya existe
@@ -128,7 +152,7 @@ class Sistema:
             # Intenta crear el archivo en la carpeta de destino
             try:
                 with open(ruta_completa, "w") as archivo:
-                    archivo.write(id)
+                    archivo.write(str(id))
                 print(f"Archivo '{nombre_archivo}' creado en '{carpeta_destino}'")
             except Exception as e:
                 print(f"Error al crear el archivo: {str(e)}")
