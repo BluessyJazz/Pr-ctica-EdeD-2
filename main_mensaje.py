@@ -13,29 +13,21 @@ empleados = sistema.empleados
 sistema.cargarEmpleados(txtempleados)
 sistema.cargarPassword(txtpassword)
 
+# Pedir al usuario que ingrese su cedula y contraseña
+cedula_ingresada = int(input("Ingrese su número de identificación (cedula): "))
+contraseña_ingresada = str(input("Ingrese su contraseña: "))
 
+# Verificar el acceso y obtener el rol del usuario
+rol_usuario = sistema.verificarAcceso(cedula_ingresada, contraseña_ingresada)
+
+if rol_usuario is not None:
+    print(f"Bienvenido, usted es un {rol_usuario}.")  
+else:
+    print("Acceso denegado. Verifique sus datos.")
 
 #imprime todos los empleados
-current = sistema.empleados.head
+'''current = sistema.empleados.head
 while current is not None:
     print(current.get_data())  # Aquí asumimos que get_data() devuelve el valor almacenado en el nodo
-    current = current.get_next()
-    
-print(sistema.noEmpleados)
+    current = current.get_next()'''
 
-buscado = sistema.buscarUsuario(1001140290)
-
-password = "mAno"
-
-'''if buscado:
-    buscado.setPassword(password)
-    print(buscado)'''
-
-#imprime direcciones en memoria
-'''def imprimir_empleados(double_list):
-    current_node = double_list.head
-    while current_node is not None:
-        print(current_node.__str__())
-        current_node = current_node.get_next()
-    
-imprimir_empleados(sistema.empleados)'''

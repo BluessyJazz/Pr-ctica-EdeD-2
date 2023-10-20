@@ -14,3 +14,10 @@ class Empleado(Usuario):
 
     def setCargo(self, cargo):
         self.cargo = cargo
+
+    def getPass(self):
+        return self.password
+
+#agregar bandeja de entrada lista doble
+#agregar bandeja leidos cola
+#agregar borradores pila

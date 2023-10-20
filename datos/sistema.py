@@ -1,4 +1,5 @@
 import csv
+import os
 from listas.list import List  # Importa la clase List para usarla en el sistema de mensajería
 from listas.double_list import DoubleList  # Importa la clase DoubleList para usarla en el sistema de mensajería
 from dequeues.stack import Stack  # Importa la clase Stack para usarla en el sistema de mensajería
@@ -12,7 +13,6 @@ from .registro import Registro
 class Sistema:
     def __init__(self):
         self.empleados = DoubleList()  # Lista de empleados
-        self.passwords = DoubleList()
         self.noEmpleados = 0
         self.message_queue = Queue()  # Cola de mensajes leídos
         self.draft_stack = Stack()  # Pila de borradores
@@ -23,20 +23,21 @@ class Sistema:
             return False
         self.empleados.addOrder(empleado)
         self.noEmpleados +=1
+        self.createtxt(empleado.id)
         return True
 
-    def eliminarEmpleado(self, id):
-        if self.empleados.search(id):
-            return self.empleados.remove(id)
-            self.noEmpleados -= 1
+    def eliminarEmpleado(self, id, empleado):
+        if empleado.cargo == "administrador":
+            if self.empleados.search(id):
+                return self.empleados.remove(id)
+                self.noEmpleados -= 1
         return None
-
       
     def buscarUsuario(self, id):
         current = self.empleados.head
         while current:
             if current.data.id == id:
-                return current.data
+                return current
             current = current.next
         return None
 
@@ -67,6 +68,7 @@ class Sistema:
                 empleado = Empleado(id, nombre, fecha_nac, ciudad_nac, dir, tel, email, None, None)
                 self.agregarEmpleado(empleado)
 
+
     def cargarPassword(self, archivo_password):
         
         with open(archivo_password, 'r') as file:
@@ -76,39 +78,63 @@ class Sistema:
                 password = data[1]
                 cargo = data[2]
 
-                print(id)
+                #print(id, password, cargo)
 
-               # Buscar empleado por ID en la lista de empleados
-                current_node = self.empleados.head
-                while current_node is not None:
-                    if current_node.data.getId() == int(id):
-                        current_node.data.setPassword(password)
-                        current_node.data.setCargo(cargo)
-                        break
-                    current_node = current_node.next
+                current_node = self.buscarUsuario(int(id))
+                #print(current_node)
+                if current_node.data.id == int(id):
+                    current_node.data.setPassword(password)
+                    current_node.data.setCargo(cargo)
 
-    def verificar_credenciales(self, id, password):
-        for empleado in self.empleados:
-            if empleado.id == id and empleado.password == password:
-                return empleado
+    def toFileEmpleados(self, filename):
+        with open(filename, "w", newline='') as file:
+            writer = csv.writer(file)
+
+            # Escribir los encabezados
+            writer.writerow(["ID", "Nombre", "Fecha de nacimiento", "Ciudad de nacimiento", "Direccion", "Telefono", "Correo electronico"])
+
+            # Escribir los datos de los usuarios
+            for i in range(self.noEmpleados):
+                usuario = self.empleados[i]
+
+                # Formatear la dirección con espacios en lugar de comas
+                direccion_str = f"{usuario.dir.calle}-{usuario.dir.noCalle}-{usuario.dir.nomenclatura}-{usuario.dir.barrio}-{usuario.dir.ciudad}"
+
+                writer.writerow([usuario.id, usuario.nombre, usuario.fecha_nac.obtener_fecha(),
+                                usuario.ciudad_nac, direccion_str, usuario.tel, usuario.email])
+                
+    def toFilePassword(self, filename):
+        with open(filename, "w") as file:
+            for empleado in self.empleados:
+                line = f"{empleado.getId()} {empleado.password} {empleado.cargo}\n"
+                file.write(line)
+
+    def verificarAcceso(self, id, password):
+        current = self.buscarUsuario(id)
+        print(current)
+        if current.data.password == password:
+            return current.data.cargo
         return None
-
-    def agregar_empleado(self, empleado, es_administrador=False):
-        if es_administrador:
-            return self.agregar(empleado)
+    
+    def createtxt(self, id):
+        carpeta_destino = "./txt"
+        nombre_archivo = f"{id}.txt"
+        ruta_completa = os.path.join(carpeta_destino, nombre_archivo)
+        
+        # Verificar si el archivo ya existe
+        if os.path.exists(ruta_completa):
+            return None
         else:
-            print("No tienes los permisos necesarios para realizar esta acción.")
+            # Intenta crear el archivo en la carpeta de destino
+            try:
+                with open(ruta_completa, "w") as archivo:
+                    archivo.write(id)
+                print(f"Archivo '{nombre_archivo}' creado en '{carpeta_destino}'")
+            except Exception as e:
+                print(f"Error al crear el archivo: {str(e)}")
 
-    def eliminar_empleado(self, id, es_administrador=False):
-        if es_administrador:
-            return self.eliminar(id)
-        else:
-            print("No tienes los permisos necesarios para realizar esta acción.")
-
-    def cambiar_contrasena(self, empleado, nueva_contrasena, es_administrador=False):
-        if es_administrador:
+    def cambiar_contrasena(self, empleado, nueva_contrasena):
+        if empleado.cargo == "administrador":
             # Cambia la contraseña del empleado
-            empleado.password = nueva_contrasena
+            empleado.setPassword(nueva_contrasena)
             # Actualiza el archivo Password.txt
-        else:
-            print("No tienes los permisos necesarios para realizar esta acción.")

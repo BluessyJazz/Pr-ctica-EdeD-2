@@ -22,7 +22,6 @@ def cargar_empleados():
 
     return empleados
 
-
 def cargar_contraseñas():
     contraseñas = {}
     with open("txt/Password.txt", "r") as archivo:
