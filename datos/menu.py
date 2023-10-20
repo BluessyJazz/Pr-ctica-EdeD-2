@@ -5,7 +5,7 @@ class Menu(Sistema):
     def __init__(self):
         self
     
-    def menu_admin(self, cargo, sistema):
+    def menu_admin(self, cargo, sistema, txtemp, txtpass):
         if cargo == "administrador":
             while True:
                 print("\nMENU ADMIN:")
@@ -23,17 +23,19 @@ class Menu(Sistema):
                     sistema.agregarEmpleado(Empleado)
 
                 elif opcion == "*":
-                    #imprime todos los empleados
-                    current = sistema.empleados.head
-                    while current is not None:
-                        print(current.get_data())  # Aquí asumimos que get_data() devuelve el valor almacenado en el nodo
-                        current = current.get_next()
+                    sistema.mostrarEmpleados()
                         
-                #elif opcion == "2":
-                #       cambiar_contraseña(usuarios)
+                elif opcion == "2":
+                    sistema.cambiarPassword()
+                
                 #elif opcion == "3":
                  #       eliminar_usuario(empleados, usuarios)
                 
+                elif opcion == "4":
+                    sistema.toFilePassword(txtpass)
+                    sistema.toFileEmpleados(txtemp)
+
+
                 elif opcion == "6":
                     
                     break

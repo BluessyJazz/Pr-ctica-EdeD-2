@@ -55,6 +55,12 @@ class Sistema:
                 
         return None
       
+    def mostrarEmpleados(self):
+        current = self.empleados.head
+        while current is not None:
+            print(current.get_data())  # Aquí asumimos que get_data() devuelve el valor almacenado en el nodo
+            current = current.get_next()  
+
     def buscarUsuario(self, id):
         current = self.empleados.head
         while current:
@@ -118,15 +124,17 @@ class Sistema:
             # Escribir los encabezados
             writer.writerow(["ID", "Nombre", "Fecha de nacimiento", "Ciudad de nacimiento", "Direccion", "Telefono", "Correo electronico"])
 
-            # Escribir los datos de los usuarios
-            for i in range(self.noEmpleados):
-                usuario = self.empleados[i]
+            # Recorrer los nodos de la lista doblemente enlazada y escribir los datos en el archivo
+            current = self.empleados.head
+            while current is not None:
+                usuario = current.get_data()
 
                 # Formatear la dirección con espacios en lugar de comas
                 direccion_str = f"{usuario.dir.calle}-{usuario.dir.noCalle}-{usuario.dir.nomenclatura}-{usuario.dir.barrio}-{usuario.dir.ciudad}"
 
                 writer.writerow([usuario.id, usuario.nombre, usuario.fecha_nac.obtener_fecha(),
                                 usuario.ciudad_nac, direccion_str, usuario.tel, usuario.email])
+                current = current.get_next()
                 
     def toFilePassword(self, filename):
         with open(filename, "w") as file:
@@ -153,12 +161,17 @@ class Sistema:
             try:
                 with open(ruta_completa, "w") as archivo:
                     archivo.write(str(id))
-                print(f"Archivo '{nombre_archivo}' creado en '{carpeta_destino}'")
             except Exception as e:
                 print(f"Error al crear el archivo: {str(e)}")
 
-    def cambiar_contrasena(self, empleado, nueva_contrasena):
-        if empleado.cargo == "administrador":
-            # Cambia la contraseña del empleado
-            empleado.setPassword(nueva_contrasena)
-            # Actualiza el archivo Password.txt
+    def cambiarPassword(self):
+        #Busca la contraseña del empleado 
+        id = int(input("Ingrese ID del usuario a cambiar contraseña: "))
+        current = self.buscarUsuario(int(id))
+        # Cambia la contraseña del empleado
+        if current is not None:
+            new_password = input("Ingrese la nueva contraseña: ")
+            current.data.setPassword(new_password)
+            print(f"Contraseña del empleado {current.data.nombre} cambiada con éxito.")
+        else:
+            print("Ningun usuario asignado a esa ID")

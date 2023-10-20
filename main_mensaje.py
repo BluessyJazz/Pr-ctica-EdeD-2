@@ -30,7 +30,7 @@ while True:
         print(f"Bienvenido, usted es un {rol_usuario}.")
         menu = Menu()
 
-        menu.menu_admin(rol_usuario, sistema) 
+        menu.menu_admin(rol_usuario, sistema, txtempleados, txtpassword) 
 
     else:
         print("Acceso denegado. Verifique sus datos e ingrese nuevamente.")
