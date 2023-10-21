@@ -20,10 +20,10 @@ class Sistema:
 
     def agregarEmpleado(self, empleado):
         # Agregar un nuevo usuario
-        id = int(input("ID del usuario: "))
+        id = int(input("\nID del usuario: "))
 
         if self.buscarUsuario(id):
-            print(f"Ya existe un usuario con el ID {id}.")
+            print(f"\nYa existe un usuario con el ID {id}.")
             return False
 
         else:         
@@ -43,7 +43,7 @@ class Sistema:
             self.noEmpleados +=1
             self.createtxt(empleado.id)
             
-            print("Usuario agregado con éxito.")
+            print("\nUsuario agregado con éxito.")
        
         return True
 
@@ -58,7 +58,7 @@ class Sistema:
     def mostrarEmpleados(self):
         current = self.empleados.head
         while current is not None:
-            print(current.get_data())  # Aquí asumimos que get_data() devuelve el valor almacenado en el nodo
+            print("\n", current.get_data())  # Aquí asumimos que get_data() devuelve el valor almacenado en el nodo
             current = current.get_next()  
 
     def buscarUsuario(self, id):
@@ -162,16 +162,16 @@ class Sistema:
                 with open(ruta_completa, "w") as archivo:
                     archivo.write(str(id))
             except Exception as e:
-                print(f"Error al crear el archivo: {str(e)}")
+                print(f"\nError al crear el archivo: {str(e)}")
 
     def cambiarPassword(self):
         #Busca la contraseña del empleado 
-        id = int(input("Ingrese ID del usuario a cambiar contraseña: "))
+        id = int(input("\nIngrese ID del usuario a cambiar contraseña: "))
         current = self.buscarUsuario(int(id))
         # Cambia la contraseña del empleado
         if current is not None:
             new_password = input("Ingrese la nueva contraseña: ")
             current.data.setPassword(new_password)
-            print(f"Contraseña del empleado {current.data.nombre} cambiada con éxito.")
+            print(f"\nContraseña del empleado {current.data.nombre} cambiada con éxito.")
         else:
-            print("Ningun usuario asignado a esa ID")
+            print("\nNingun usuario asignado a esa ID")

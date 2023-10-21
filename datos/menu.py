@@ -10,34 +10,41 @@ class Menu(Sistema):
             while True:
                 print("\nMENU ADMIN:")
                 print("1. Registrar nuevo usuario")
-                print("* Mostrar empleados")
-                print("2. Cambiar contraseña de usuario")
-                print("3. Eliminar usuario")
-                print("4. Guardar en archivo CSV")
-                print("5. Guardar y SALIR")
-                print("6. Salir SIN GUARDAR")
+                print("2. Eliminar usuario")
+                print("3. Cambiar contraseña de usuario")
+                print("4. Ver usuarios")
+                print("5. Guardar")
+                print("6. Guardar y SALIR")
+                print("7. Salir SIN GUARDAR")
 
-                opcion = input("Seleccione una opción: ")
+                opcion = input("\nSeleccione una opción: ")
 
                 if opcion == "1":
                     sistema.agregarEmpleado(Empleado)
 
-                elif opcion == "*":
-                    sistema.mostrarEmpleados()
-                        
                 elif opcion == "2":
+                    print("\nFunción no disponible")
+                        
+                elif opcion == "3":
                     sistema.cambiarPassword()
                 
-                #elif opcion == "3":
-                 #       eliminar_usuario(empleados, usuarios)
-                
                 elif opcion == "4":
+                    sistema.mostrarEmpleados()
+                
+                elif opcion == "5":
                     sistema.toFilePassword(txtpass)
                     sistema.toFileEmpleados(txtemp)
+                    print("\nGuardado con éxito")
 
 
                 elif opcion == "6":
-                    
+                    sistema.toFilePassword(txtpass)
+                    sistema.toFileEmpleados(txtemp)
+                    print("\nGuardado con éxito")
+                    print("\nCerrando sesión...")
                     break
-                '''else:
-                    print("Opción no válida. Intente nuevamente.")'''
+                elif opcion == "7":
+                    print("\nCerrando sesión...")
+                    break
+                else:
+                    print("\nOpción no válida. Intente nuevamente.")
