@@ -1,5 +1,5 @@
 from .sistema import Sistema
-from .empleados import Empleado
+from .empleado import Empleado
 
 class Menu(Sistema):
     def __init__(self):
@@ -23,7 +23,8 @@ class Menu(Sistema):
                     sistema.agregarEmpleado(Empleado)
 
                 elif opcion == "2":
-                    print("\nFunción no disponible")
+                    id = int(input("Escriba el número de ID del empleado que desea eliminar: "))
+                    print(sistema.eliminarEmpleado(id))
                         
                 elif opcion == "3":
                     sistema.cambiarPassword()
@@ -36,15 +37,16 @@ class Menu(Sistema):
                     sistema.toFileEmpleados(txtemp)
                     print("\nGuardado con éxito")
 
-
                 elif opcion == "6":
                     sistema.toFilePassword(txtpass)
                     sistema.toFileEmpleados(txtemp)
                     print("\nGuardado con éxito")
                     print("\nCerrando sesión...")
                     break
+
                 elif opcion == "7":
                     print("\nCerrando sesión...")
                     break
+
                 else:
                     print("\nOpción no válida. Intente nuevamente.")

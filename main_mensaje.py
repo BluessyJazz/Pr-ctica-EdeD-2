@@ -1,7 +1,7 @@
 import csv
 from datos.direccion import Direccion
 from datos.fecha import Fecha
-from datos.empleados import Empleado
+from datos.empleado import Empleado
 from datos.sistema import Sistema
 from datos.menu import Menu
 

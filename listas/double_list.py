@@ -76,18 +76,22 @@ class DoubleList:
         return data
 
     def remove(self, node):
-        prev = node.get_prev()
-        next = node.get_next()
-        if prev is not None:
+        if node == self.head:
+            return self.removeFirst()
+        elif node == self.tail:
+            return self.removeLast()
+        else:
+            temp = node
+            prev = temp.get_prev()
+            next = temp.get_next()
             prev.set_next(next)
-        else:
-            self.head = next
-        if next is not None:
             next.set_prev(prev)
-        else:
-            self.tail = prev
-        self.size -= 1
-        return node.get_data()
+            node.set_next(None)
+            node.set_prev(None)
+
+            self.size -= 1
+
+        return node
 
     def addBefore(self, node, data):
         if node is None:
@@ -127,7 +131,7 @@ class DoubleList:
     
 
     def addOrder(self, data):
-        new_node = DoubleNode(data)
+        #new_node = DoubleNode(data)
         if self.isEmpty() or data < self.head.get_data():
             self.addFirst(data)
         elif data > self.tail.get_data():
@@ -136,6 +140,6 @@ class DoubleList:
             current = self.head
             while current.get_data() < data:
                 current = current.get_next()
-            prev_node = current.get_prev()
+            #prev_node = current.get_prev()
             self.addBefore(current, data)
 

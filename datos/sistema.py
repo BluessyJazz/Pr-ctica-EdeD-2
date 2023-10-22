@@ -4,8 +4,7 @@ from listas.list import List  # Importa la clase List para usarla en el sistema 
 from listas.double_list import DoubleList  # Importa la clase DoubleList para usarla en el sistema de mensajería
 from dequeues.stack import Stack  # Importa la clase Stack para usarla en el sistema de mensajería
 from dequeues.queue import Queue  # Importa la clase Queue para usarla en el sistema de mensajería
-from .empleados import Empleado
-from .usuario import Usuario
+from .empleado import Empleado
 from .admin import Administrador
 from .fecha import Fecha
 from .direccion import Direccion
@@ -30,7 +29,9 @@ class Sistema:
             nombre = input("Nombre del usuario: ")
             fecha_nac = Fecha(*map(int, input("Fecha de nacimiento (dd/mm/aaaa): ").split("/")))
             ciudad_nac = input("Ciudad de nacimiento: ")
+
             dir = Direccion(*input("Dirección (calle, noCalle, nomenclatura, barrio, ciudad): ").split(", "))
+
             tel = int(input("Teléfono: "))
             email = input("Correo electrónico: ")
 
@@ -47,13 +48,13 @@ class Sistema:
        
         return True
 
-    def eliminarEmpleado(self, id, empleado):
-        if empleado.cargo == "administrador":
-            if self.empleados.search(id):
-                self.noEmpleados -= 1
-                return self.empleados.remove(id)
-                
-        return None
+    def eliminarEmpleado(self, id):
+        empleado = self.buscarUsuario(id)
+        if empleado:
+            self.empleados.remove(empleado)
+            self.noEmpleados -= 1
+            return f"Empleado con ID {id} eliminado correctamente."
+        return f"No se encontró ningún empleado con el ID {id}."
       
     def mostrarEmpleados(self):
         current = self.empleados.head
