@@ -1,6 +1,6 @@
-def funcioninutil():
+
     
-    print("hola")    
+    
     
 def cargar_empleados():
     empleados = []
