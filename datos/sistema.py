@@ -173,6 +173,6 @@ class Sistema:
         if current is not None:
             new_password = input("Ingrese la nueva contraseña: ")
             current.data.setPassword(new_password)
-            print(f"\nContraseña del empleado {current.data.nombre} cambiada con éxito.")
+            return print(f"\nContraseña del empleado {current.data.nombre} cambiada con éxito.")
         else:
-            print("\nNingun usuario asignado a esa ID")
+            return print("\nNingun usuario asignado a esa ID")

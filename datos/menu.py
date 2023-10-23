@@ -14,8 +14,8 @@ class Menu(Sistema):
                 print("3. Cambiar contraseña de usuario")
                 print("4. Ver usuarios")
                 print("5. Guardar")
-                print("6. Guardar y SALIR")
-                print("7. Salir SIN GUARDAR")
+                print("6. Guardar y cerrar sesión")
+                print("7. Cerrar sesión SIN GUARDAR")
 
                 opcion = input("\nSeleccione una opción: ")
 
