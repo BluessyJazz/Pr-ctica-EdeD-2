@@ -1,6 +1,6 @@
 from listas.double_list import DoubleList
 from .empleado import Empleado
-from ..main_mensaje import *
+#from main_mensaje import *
 
 class Mensaje:
     def __init__(self, id_mensaje, nombre_emisor, correo_receptor, titulo, mensaje, fecha, estado):
@@ -12,22 +12,25 @@ class Mensaje:
         self.fecha = fecha
         self.estado = estado
 
-class Sistema_Mensajes(Empleado, Mensaje):
+    def __lt__(self, other):
+        return self.id_mensaje < other.id_mensaje
+
+class Sistema_Mensajes():
     def __init__(self):
         self.mensajes = DoubleList()
         self.noMensajes = 0
 
-    def agregarMensaje(self, mensaje):
+    '''def agregarMensaje(self, mensaje, nombre_emisor):
         # Agregar un nuevo usuario
-        nombre_emisor = id_usuario #Se importa del usuario que inicia sesión en main_mensaje
+        #Se importa del usuario que inicia sesión en main_mensaje
         correo = int(input("\nCorreo del usuario: "))
         emisor = sistema.buscarCorreo(correo)
         id_receptor = emisor.get_Id()
-        archivo_mensaje = f"/txt/{id_receptor}.txt"
+        archivo_mensaje = f"/txt/{id_receptor}_BA.txt"
 
         mensajes_receptor = self.cargarMensajes(archivo_mensaje, id_receptor)
 
-        id_mensaje = sistema.mensajes_receptor.noMensajes + 1
+        id_mensaje = sistema.mensajes_receptor + 1
 
         titulo = input("Titulo del mensaje: ")
         mensaje = input("Escriba el mensaje: ")
@@ -35,34 +38,34 @@ class Sistema_Mensajes(Empleado, Mensaje):
 
         mensaje = Mensaje(id_mensaje, nombre_emisor, correo, titulo, mensaje, fecha)
                 
-        self.empleados.addOrder(empleado)
-        id +=1
-        self.createtxt(empleado.id)
+        self.mensajes.addOrder(mensaje)
+        self.noMensajes += 1
+
         
-            print("\nUsuario agregado con éxito.")
+        print("\nMensaje enviado con éxito.")
        
-        return True
+        return True'''
 
     def cargarMensajes(self, archivo_mensaje, id):
 
-        archivo_mensaje = f"/txt/{id}.txt"
+        archivo_mensaje = f"txt/{id}_BA.txt"
         
         with open(archivo_mensaje, 'r') as file:
             for line in file:
                 data = [x.strip() for x in line.split(" ")]
-                id_mensaje = data[0]
+                id_mensaje = line
                 nombre_emisor = data[1]
                 correo = data[2]
                 titulo = data[3]
                 mensaje = data[4]
                 fecha = data[5]
 
-                mensaje = Mensaje(id_mensaje, nombre_emisor, correo, titulo, mensaje, fecha)
+                mensaje = Mensaje(id_mensaje, nombre_emisor, correo, titulo, mensaje, fecha, None)
                                
-                self.mensajes.addOrder()
+                self.mensajes.addOrder(mensaje)
                 self.noMensajes +=1
 
-        return self.mensajes
+        return self.noMensajes
 
     def buscarMensaje(self, id):
         current = self.mensajes.head

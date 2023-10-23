@@ -4,6 +4,7 @@ from datos.fecha import Fecha
 from datos.empleado import Empleado
 from datos.sistema_empleados import Sistema_Empleados
 from datos.menu import Menu
+from datos.sistema_mensajes import Sistema_Mensajes
 
 txtempleados = "txt/Empleados.txt"
 txtpassword = "txt/Password.txt"
@@ -35,6 +36,15 @@ while True:
         menu = Menu()
 
         menu.menu_admin(rol_usuario, sistema, txtempleados, txtpassword)
+
+    elif rol_usuario == "empleado":
+        print(f"\nBienvenido, usted es un {rol_usuario}.")
+
+        sistema_mensajes = Sistema_Mensajes()
+
+        archivo_mensaje = f"txt/{id_usuario}_BA.txt"
+
+        print(sistema_mensajes.cargarMensajes(archivo_mensaje, id_usuario))
 
     else:
         print("\nAcceso denegado. Verifique sus datos e intente nuevamente.")

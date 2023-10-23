@@ -131,7 +131,7 @@ class DoubleList:
     
 
     def addOrder(self, data):
-        #new_node = DoubleNode(data)
+        new_node = DoubleNode(data)
         if self.isEmpty() or data < self.head.get_data():
             self.addFirst(data)
         elif data > self.tail.get_data():
@@ -140,6 +140,6 @@ class DoubleList:
             current = self.head
             while current.get_data() < data:
                 current = current.get_next()
-            #prev_node = current.get_prev()
+            prev_node = current.get_prev()
             self.addBefore(current, data)
 

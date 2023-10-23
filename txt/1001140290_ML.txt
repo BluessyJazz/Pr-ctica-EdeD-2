@@ -1,4 +1,4 @@
-1 Pedro correo@correo.com titulo mensaje dd/mm/aaaa entrada
-2 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
-3 Pedro correo@correo.com titulo mensaje dd/mm/aaaa entrada
-4 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
