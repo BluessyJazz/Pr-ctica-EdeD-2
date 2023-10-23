@@ -1,21 +1,14 @@
 import csv
 import os
-from listas.list import List  # Importa la clase List para usarla en el sistema de mensajería
 from listas.double_list import DoubleList  # Importa la clase DoubleList para usarla en el sistema de mensajería
-from dequeues.stack import Stack  # Importa la clase Stack para usarla en el sistema de mensajería
-from dequeues.queue import Queue  # Importa la clase Queue para usarla en el sistema de mensajería
 from .empleado import Empleado
-from .admin import Administrador
 from .fecha import Fecha
 from .direccion import Direccion
-from .registro import Registro
 
-class Sistema:
+class Sistema_Empleados:
     def __init__(self):
         self.empleados = DoubleList()  # Lista de empleados
         self.noEmpleados = 0
-        self.message_queue = Queue()  # Cola de mensajes leídos
-        self.draft_stack = Stack()  # Pila de borradores
 
     def agregarEmpleado(self, empleado):
         # Agregar un nuevo usuario
@@ -66,6 +59,14 @@ class Sistema:
         current = self.empleados.head
         while current:
             if current.data.id == id:
+                return current
+            current = current.next
+        return None
+    
+    def buscarCorreo(self, correo):
+        current = self.empleados.head
+        while current:
+            if current.data.email == correo:
                 return current
             current = current.next
         return None
@@ -161,7 +162,7 @@ class Sistema:
             # Intenta crear el archivo en la carpeta de destino
             try:
                 with open(ruta_completa, "w") as archivo:
-                    archivo.write(str(id))
+                    archivo.write("")
             except Exception as e:
                 print(f"\nError al crear el archivo: {str(e)}")
 
