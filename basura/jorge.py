@@ -1,3 +1,6 @@
+def jelo():
+    print("Jelo Jorge")
+
 def cargar_empleados():
     empleados = []
     with open("txt/Empleados.txt", "r") as archivo:
