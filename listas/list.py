@@ -41,3 +41,26 @@ class List:
             self.tail.set_next(newest)
         self.tail = newest
         self.size += 1
+
+    def removeFirst(self):
+        if self.isEmpty():
+            return None
+        data = self.head.get_data()
+        self.head = self.head.get_next()
+        self.size -= 1
+        if self.isEmpty():
+            self.tail = None
+        return data
+
+    def removeLast(self):
+        if self.size == 1:
+            self.removeFirst()
+        else:
+            data = self.tail.get_data()
+            anterior = self.head
+            while anterior.get_next() != self.tail:
+                anterior = anterior.get_next()
+            anterior.set_next(None)
+            self.tail = anterior
+            self.size -= 1
+            return data

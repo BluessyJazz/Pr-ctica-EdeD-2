@@ -3,24 +3,25 @@ from listas.list import List
 
 class Stack:
     def __init__(self):
-        self.items = List()
+        self.list = List()
 
-    def is_empty(self):
-        return self.items.is_empty()
+    def isEmpty(self):
+        return self.list.isEmpty()
+    
+    def size(self):
+        return self.list.size()
 
     def push(self, item):
-        self.items.add(item)
+        self.list.addFirst(item)
 
     def pop(self):
-        if self.is_empty():
-            raise Exception("Stack is empty")
+        if self.isEmpty():
+            return None
         else:
-            item = self.items.head.get_data()
-            self.items.remove(item)
-            return item
+            return self.list.removeFirst()
 
     def top(self):
-        if self.is_empty():
-            raise Exception("Stack is empty")
+        if self.isEmpty():
+            return None
         else:
-            return self.items.head.get_data()
+            return self.list.first()

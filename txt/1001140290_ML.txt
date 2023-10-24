@@ -1,4 +1,5 @@
-0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
-0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
-0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
-0 Pedro correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Anderson pipe@mail.com Anderson pipe@mail.com aaaa aaaaaaaaaaaaaaaaaaaaa None leido
+0 BBB c@c.c Anderson correo@correo.com titulo mensaje dd/mm/aaaa leido
+0 Anderson pipe@mail.com Anderson pipe@mail.com hola aaaaaaaaaaaaa 23/10/2023-12:52 leido
+0 AAA c@c.c Anderson correo@correo.com titulo mensaje 23/10/2023-12:51 leido
+0 Anderson pipe@mail.com Anderson pipe@mail.com llll llllllllllllllllll 23/10/2023-12:46 leido

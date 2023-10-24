@@ -5,32 +5,24 @@ class Queue:
     def __init__(self):
         self.list = List()
 
-    def is_empty(self):
-        return self.list.is_empty()
+    def isEmpty(self):
+        return self.list.isEmpty()
+    
+    def size(self):
+        return self.list.size()
 
     def enqueue(self, item):
-        self.list.add(item)
+        self.list.addLast(item)
 
     def dequeue(self):
-        if self.is_empty():
-            raise IndexError("dequeue from empty queue")
-        else:
-            current = self.list.head
-            previous = None
-            while current.get_next() is not None:
-                previous = current
-                current = current.get_next()
-            if previous is None:
-                self.list.head = None
-            else:
-                previous.set_next(None)
-            return current.get_data()
-
-    def first(self):
-        if self.is_empty():
+        if self.isEmpty():
             return None
         else:
-            current = self.list.head
-            while current.get_next() is not None:
-                current = current.get_next()
-            return current.get_data()
+            return self.list.removeFirst()
+        
+
+    def first(self):
+        if self.isEmpty():
+            return None
+        else:
+            return self.list.first()
