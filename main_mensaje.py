@@ -4,6 +4,7 @@ from datos.fecha import Fecha
 from datos.empleado import Empleado
 from datos.sistema_empleados import Sistema_Empleados
 from datos.menu import Menu
+from datos.menu_admin import *
 from datos.sistema_mensajes import Sistema_Mensajes
 
 txtempleados = "txt/Empleados.txt"
@@ -29,15 +30,17 @@ while True:
     rol_usuario = sistema.verificarAcceso(id_usuario, contraseña_ingresada)
 
     if rol_usuario == "administrador":
-        print(f"\nBienvenido, usted es un {rol_usuario}.")
+        print(f"\nBienvenido, usted es {rol_usuario}.")
 
         #Opción de menú de admin y menú de mensajes
         
-        menu = Menu()
+        #menu = Menu()
 
-        menu.menu_admin(rol_usuario, sistema, txtempleados, txtpassword)
+        #menu.menu_admin(sistema, txtempleados, txtpassword)
+        menu_admin(sistema, txtempleados, txtpassword)
 
-    elif rol_usuario == "empleado":
+
+    if rol_usuario == "empleado" or rol_usuario == "administrador":
         print(f"\nBienvenido, usted es un {rol_usuario}.\n")
 
         sistema_mensajes = Sistema_Mensajes()
@@ -46,9 +49,12 @@ while True:
 
         print("Usted tiene", sistema_mensajes.cargarEntrada(archivo_mensaje, id_usuario), "mensajes nuevos.")
         print("Usted tiene", sistema_mensajes.cargarLeidos(archivo_mensaje, id_usuario), "mensajes leídos.")
-        print("Usted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
-        
+           
+
         while True:
+
+            print("\nUsted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
+
             print("\nMENU DE MENSAJES:")
             print("\n1. Escribir mensaje")
             print("\n2. Ver bandeja de entrada")
@@ -71,6 +77,8 @@ while True:
                     sistema_mensajes.guardarMensajes(sistema, mensajeescrito)
                 elif select == 2:
                     sistema_mensajes.guardarBorradores(id_usuario, mensajeescrito)
+                    print("Usted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
+
                 elif select == 3:
                     print("\nMensaje descartado")
             
@@ -86,22 +94,25 @@ while True:
                     id = int(input(("\nQué número de mensaje desea leer?: ")))
 
                     sistema_mensajes.mostrarMensaje(id, id_usuario)
-                    print("\nUsted tiene", sistema_mensajes.cargarEntrada(archivo_mensaje, id_usuario), "mensajes nuevos.")
-                    print("Usted tiene", sistema_mensajes.cargarLeidos(archivo_mensaje, id_usuario), "mensajes leídos.")
-                    print("Usted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
-
+                    
                 elif select == 2:
                     print("\n")
 
             elif opcion == 3:
-                while True:
+                mensajecero = (sistema_mensajes.mensajesLeidos.first())
+                print(f"\n{mensajecero.titulo}\n{mensajecero.mensaje}")
+                sistema_mensajes.mensajesLeidos.enqueue(mensajecero)
+                sistema_mensajes.mensajesLeidos.dequeue()
+                while (sistema_mensajes.mensajesLeidos.first()) != mensajecero:
+                    print("\nExit para salir")
+                    select = input("\nEnter: siguiente mensaje: ")
                     primerMensaje = (sistema_mensajes.mensajesLeidos.first())
                     print(f"\n{primerMensaje.titulo}\n{primerMensaje.mensaje}")
                     sistema_mensajes.mensajesLeidos.enqueue(primerMensaje)
                     sistema_mensajes.mensajesLeidos.dequeue()
-                    print("\nExit para salir")
+                    
 
-                    select = input("\nEnter: siguiente mensaje: ")
+                    #select = input("\nEnter: siguiente mensaje: ")
 
                     if select == "exit":
                         break
@@ -128,17 +139,16 @@ while True:
                             descartado = sistema_mensajes.mensajesBorradores.pop()
                             print("\nHa sido descartado el mensaje", descartado.titulo)
                         elif select == 3:
-                            sistema_mensajes.guardarBorradores(id_usuario)
+                            sistema_mensajes.guardarBorradoresPop(id_usuario)
                             break
                         else:
                             print("\nOpción no válida.")
                         
                     else:
                         print("\nNo hay borradores aquí")
-                        sistema_mensajes.guardarBorradores(id_usuario)
+                        sistema_mensajes.guardarBorradoresPop(id_usuario)
                         break
                 
-
             elif opcion == 5:
                 break
                             

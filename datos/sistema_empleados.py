@@ -152,19 +152,46 @@ class Sistema_Empleados:
     
     def createtxt(self, id):
         carpeta_destino = "./txt"
-        nombre_archivo = f"{str(id)}.txt"
-        ruta_completa = os.path.join(carpeta_destino, nombre_archivo)
+        nombre_archivoBA = f"{str(id)}_BA.txt"
+        nombre_archivoML = f"{str(id)}_ML.txt"
+        nombre_archivoB = f"{str(id)}_B.txt"
+        ruta_completa1 = os.path.join(carpeta_destino, nombre_archivoBA)
+        ruta_completa2 = os.path.join(carpeta_destino, nombre_archivoML)
+        ruta_completa3 = os.path.join(carpeta_destino, nombre_archivoB)
         
         # Verificar si el archivo ya existe
-        if os.path.exists(ruta_completa):
+        if os.path.exists(ruta_completa1):
             return None
         else:
             # Intenta crear el archivo en la carpeta de destino
             try:
-                with open(ruta_completa, "w") as archivo:
+                with open(ruta_completa1, "w") as archivo:
                     archivo.write("")
             except Exception as e:
                 print(f"\nError al crear el archivo: {str(e)}")
+
+        # Verificar si el archivo ya existe
+        if os.path.exists(ruta_completa2):
+            return None
+        else:
+            # Intenta crear el archivo en la carpeta de destino
+            try:
+                with open(ruta_completa2, "w") as archivo:
+                    archivo.write("")
+            except Exception as e:
+                print(f"\nError al crear el archivo: {str(e)}")
+
+        # Verificar si el archivo ya existe
+        if os.path.exists(ruta_completa3):
+            return None
+        else:
+            # Intenta crear el archivo en la carpeta de destino
+            try:
+                with open(ruta_completa3, "w") as archivo:
+                    archivo.write("")
+            except Exception as e:
+                print(f"\nError al crear el archivo: {str(e)}")
+
 
     def cambiarPassword(self):
         #Busca la contraseña del empleado 

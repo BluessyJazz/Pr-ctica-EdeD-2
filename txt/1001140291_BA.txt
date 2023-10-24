@@ -1,0 +1,2 @@
+0|Anderson|pipe@mail.com|Andres Perez|andres@123.com|101010101010101010010|10101000101001001001001|23/10/2023-21:42|entrada
+0|Anderson|pipe@mail.com|Andres Perez|andres@123.com|Titulo del 55555|Cuerpo del mensaje la la la la|23/10/2023-22:02|entrada

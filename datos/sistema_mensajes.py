@@ -34,16 +34,12 @@ class Sistema_Mensajes():
         self.noMensajes = 0
 
     def escribirMensaje(self, sistemaemp, id_emisor):
-        # Agregar un nuevo usuario
-        #Se importa del usuario que inicia sesión en main_mensaje
         correo_receptor = input("\nPara(correo) : ")
         receptor = sistemaemp.buscarCorreo(correo_receptor)
         id_receptor = receptor.data.id
         nombre_receptor = receptor.data.nombre
         archivo_mensaje = f"/txt/{id_receptor}_BA.txt"
-        #mensajes_receptor = self.cargarMensajes(archivo_mensaje, id_receptor)
-        #id_mensaje = mensajes_receptor + 1
-
+        
         emisor = sistemaemp.buscarUsuario(id_emisor)
         nombre_emisor = emisor.data.nombre
         correo_emisor = emisor.data.email
@@ -54,8 +50,6 @@ class Sistema_Mensajes():
 
         mensaje = Mensaje(0, nombre_emisor, correo_emisor, nombre_receptor, correo_receptor, titulo, mensaje, fecha, None)
                
-        #self.guardarMensajes(archivo_mensaje, id_receptor, sistemaemp)
-       
         return mensaje
 
     def cargarEntrada(self, archivo_mensaje, id):
@@ -66,7 +60,7 @@ class Sistema_Mensajes():
 
         with open(archivo_mensaje, 'r') as file:
             for line in file:
-                data = [x.strip() for x in line.split(" ")]
+                data = [x.strip() for x in line.split("|")]
                 id_mensaje += 1
                 nombre_emisor = data[1]
                 correo_emisor = data[2]
@@ -79,12 +73,13 @@ class Sistema_Mensajes():
 
                 mensaje = Mensaje(id_mensaje, nombre_emisor, correo_emisor, nombre_receptor, correo_receptor, titulo, mensaje, fecha, estado)
                 
+            
                 if estado == "entrada":
                     self.mensajes.addOrder(mensaje)
                 else:
                     return None
                 self.noMensajes +=1
-                    
+                
         return id_mensaje
     
     def cargarLeidos(self, archivo_mensaje, id):
@@ -95,7 +90,7 @@ class Sistema_Mensajes():
 
         with open(archivo_mensaje, 'r') as file:
             for line in file:
-                data = [x.strip() for x in line.split(" ")]
+                data = [x.strip() for x in line.split("|")]
                 id_mensaje += 1
                 nombre_emisor = data[1]
                 correo_emisor = data[2]
@@ -121,7 +116,7 @@ class Sistema_Mensajes():
 
         with open(archivo_mensaje, 'r') as file:
             for line in file:
-                data = [x.strip() for x in line.split(" ")]
+                data = [x.strip() for x in line.split("|")]
                 id_mensaje += 1
                 nombre_emisor = data[1]
                 correo_emisor = data[2]
@@ -147,7 +142,7 @@ class Sistema_Mensajes():
         fecha_actual = datetime.now().strftime("%d/%m/%Y-%H:%M")
         with open(archivo_entrada, "a") as file:
 
-            line = f"0 {mensaje.nombre_emisor} {mensaje.correo_emisor} {mensaje.nombre_receptor} {mensaje.correo_receptor} {mensaje.titulo} {mensaje.mensaje} {fecha_actual} entrada\n"
+            line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{fecha_actual}|entrada\n"
             file.write(line)
         
         return print(f"\nMensaje enviado con éxito a {nombre_receptor}.")     
@@ -156,7 +151,7 @@ class Sistema_Mensajes():
         archivo_entrada = f"txt/{id_usuario}_B.txt"
         fecha_actual = datetime.now().strftime("%d/%m/%Y-%H:%M")
         with open(archivo_entrada, "a") as file:
-            line = f"0 {mensaje.nombre_emisor} {mensaje.correo_emisor} {mensaje.nombre_receptor} {mensaje.correo_receptor} {mensaje.titulo} {mensaje.mensaje} {fecha_actual} borrador\n"
+            line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{fecha_actual}|borrador\n"
             file.write(line)
 
         return print(f"\nMensaje guardado con éxito en borradores.")
@@ -201,7 +196,7 @@ class Sistema_Mensajes():
         with open(archivo_entrada, "w") as file:
             mensaje = self.mensajes.head
             while mensaje is not None:
-                line = f"0 {mensaje.data.nombre_emisor} {mensaje.data.correo_emisor} {mensaje.data.nombre_receptor} {mensaje.data.correo_receptor} {mensaje.data.titulo} {mensaje.data.mensaje} {mensaje.data.fecha} entrada\n"
+                line = f"0|{mensaje.data.nombre_emisor}|{mensaje.data.correo_emisor}|{mensaje.data.nombre_receptor}|{mensaje.data.correo_receptor}|{mensaje.data.titulo}|{mensaje.data.mensaje}|{mensaje.data.fecha}|entrada\n"
                 file.write(line)
                 mensaje = mensaje.next
                                      
@@ -209,13 +204,13 @@ class Sistema_Mensajes():
         archivo_leidos = f"txt/{id_usuario}_ML.txt"
         with open(archivo_leidos, "a") as file:
             mensaje = mensaje.data
-            line = f"0 {mensaje.nombre_emisor} {mensaje.correo_emisor} {mensaje.nombre_receptor} {mensaje.correo_receptor} {mensaje.titulo} {mensaje.mensaje} {mensaje.fecha} leido\n"
+            line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|leido\n"
             file.write(line)
 
-    def guardarBorradores(self, id_usuario):
+    def guardarBorradoresPop(self, id_usuario):
         archivo_leidos = f"txt/{id_usuario}_B.txt"
         with open(archivo_leidos, "w") as file:
             while self.mensajesBorradores.top() is not None:
                 mensaje = self.mensajesBorradores.pop()
-                line = f"0 {mensaje.nombre_emisor} {mensaje.correo_emisor} {mensaje.nombre_receptor} {mensaje.correo_receptor} {mensaje.titulo} {mensaje.mensaje} {mensaje.fecha} borrador\n"
+                line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|borrador\n"
                 file.write(line)
