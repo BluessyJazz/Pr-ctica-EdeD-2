@@ -10,7 +10,7 @@ def menu_admin(sistema, txtemp, txtpass):
         print("4. Ver usuarios")
         print("5. Guardar")
         print("6. Guardar y cerrar sesión")
-        print("7. Cerrar sesión SIN GUARDAR")
+        print("7. ABRIR MENU DE MENSAJES")
 
         opcion = input("\nSeleccione una opción: ")
 

@@ -55,11 +55,11 @@ while True:
             print("\nUsted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
 
             print("\nMENU DE MENSAJES:")
-            print("\n1. Escribir mensaje")
-            print("\n2. Ver bandeja de entrada")
-            print("\n3. Ver mensajes leídos")
-            print("\n4. Ver mensajes en borradores")
-            print("\n5. Cerrar Sesión")
+            print("1. Escribir mensaje")
+            print("2. Ver bandeja de entrada")
+            print("3. Ver mensajes leídos")
+            print("4. Ver mensajes en borradores")
+            print("5. Cerrar Sesión")
             
             opcion = int(input("\nSeleccione una opción: "))
 
@@ -67,8 +67,8 @@ while True:
                 mensajeescrito = sistema_mensajes.escribirMensaje(sistema, id_usuario)
 
                 print("\n1. Enviar el mensaje")
-                print("\n2. Guardar como borrador")
-                print("\n3. Descartar el mensaje")
+                print("2. Guardar como borrador")
+                print("3. Descartar el mensaje")
 
                 select = int(input("\nQué desea hacer?: "))
 
@@ -85,7 +85,7 @@ while True:
                 sistema_mensajes.mostrarBandejaEntrada()
 
                 print("\n1. Leer un mensaje")
-                print("\n2. Ir Atrás")
+                print("2. Ir Atrás")
 
                 select = int(input("\nQué desea hacer?: "))
                 
@@ -126,8 +126,8 @@ while True:
                         print(f"\nTitulo: {borrador.titulo}\nMensaje: {borrador.mensaje}\nPara: {borrador.nombre_receptor}")
 
                         print("\n1. Enviar el mensaje")
-                        print("\n2. Descartar borrador")
-                        print("\n3. Volver atrás")
+                        print("2. Descartar borrador")
+                        print("3. Volver atrás")
 
                         select = int(input("\nQué desea hacer?: "))
 
