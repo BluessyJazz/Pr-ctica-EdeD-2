@@ -48,11 +48,10 @@ while True:
         archivo_mensaje = f"txt/{id_usuario}_BA.txt"
 
         print("Usted tiene", sistema_mensajes.cargarEntrada(archivo_mensaje, id_usuario), "mensajes nuevos.")
-        print("Usted tiene", sistema_mensajes.cargarLeidos(archivo_mensaje, id_usuario), "mensajes leídos.")
-           
+
 
         while True:
-
+            print("\nUsted tiene", sistema_mensajes.cargarLeidos(archivo_mensaje, id_usuario), "mensajes leídos.")
             print("\nUsted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
 
             print("\nMENU DE MENSAJES:")
