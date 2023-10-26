@@ -45,14 +45,12 @@ while True:
 
         sistema_mensajes = Sistema_Mensajes()
 
-        archivo_mensaje = f"txt/{id_usuario}_BA.txt"
-
-        print("Usted tiene", sistema_mensajes.cargarEntrada(archivo_mensaje, id_usuario), "mensajes nuevos.")
+        print("Usted tiene", sistema_mensajes.cargarEntrada(id_usuario), "mensajes nuevos.")
 
 
         while True:
-            print("\nUsted tiene", sistema_mensajes.cargarLeidos(archivo_mensaje, id_usuario), "mensajes leídos.")
-            print("\nUsted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
+            print("Usted tiene", sistema_mensajes.cargarLeidos(id_usuario), "mensajes leídos.")
+            print("Usted tiene", sistema_mensajes.cargarBorradores(id_usuario), "borradores.")
 
             print("\nMENU DE MENSAJES:")
             print("1. Escribir mensaje")
@@ -74,9 +72,9 @@ while True:
 
                 if select == 1:
                     sistema_mensajes.guardarMensajes(sistema, mensajeescrito)
+                
                 elif select == 2:
                     sistema_mensajes.guardarBorradores(id_usuario, mensajeescrito)
-                    print("Usted tiene", sistema_mensajes.cargarBorradores(archivo_mensaje, id_usuario), "borradores.")
 
                 elif select == 3:
                     print("\nMensaje descartado")
@@ -105,6 +103,12 @@ while True:
                 while (sistema_mensajes.mensajesLeidos.first()) != mensajecero:
                     print("\nExit para salir")
                     select = input("\nEnter: siguiente mensaje: ")
+
+                    if select == "exit":
+                        break
+                    else:
+                        print("\n")
+                
                     primerMensaje = (sistema_mensajes.mensajesLeidos.first())
                     print(f"\n{primerMensaje.titulo}\n{primerMensaje.mensaje}")
                     sistema_mensajes.mensajesLeidos.enqueue(primerMensaje)
@@ -113,10 +117,7 @@ while True:
 
                     #select = input("\nEnter: siguiente mensaje: ")
 
-                    if select == "exit":
-                        break
-                    else:
-                        print("\n")
+                    
                         
             elif opcion == 4:
                 while True:
@@ -137,7 +138,9 @@ while True:
                         elif select == 2:
                             descartado = sistema_mensajes.mensajesBorradores.pop()
                             print("\nHa sido descartado el mensaje", descartado.titulo)
+                            #sistema_mensajes.guardarBorradoresPop(id_usuario)
                         elif select == 3:
+                            #sistema_mensajes.mensajesBorradores.push(borrador)
                             sistema_mensajes.guardarBorradoresPop(id_usuario)
                             break
                         else:

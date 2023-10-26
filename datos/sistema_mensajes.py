@@ -52,7 +52,7 @@ class Sistema_Mensajes():
                
         return mensaje
 
-    def cargarEntrada(self, archivo_mensaje, id):
+    def cargarEntrada(self, id):
 
         archivo_mensaje = f"txt/{id}_BA.txt"
         
@@ -82,7 +82,7 @@ class Sistema_Mensajes():
                 
         return id_mensaje
     
-    def cargarLeidos(self, archivo_mensaje, id):
+    def cargarLeidos(self, id):
 
         archivo_mensaje = f"txt/{id}_ML.txt"
         
@@ -108,7 +108,7 @@ class Sistema_Mensajes():
                                     
         return id_mensaje
     
-    def cargarBorradores(self, archivo_mensaje, id):
+    def cargarBorradores(self, id):
 
         archivo_mensaje = f"txt/{id}_B.txt"
         
@@ -129,8 +129,7 @@ class Sistema_Mensajes():
 
                 mensaje = Mensaje(id_mensaje, nombre_emisor, correo_emisor, nombre_receptor, correo_receptor, titulo, mensaje, fecha, estado)
                 
-                if estado == "borrador":
-                    self.mensajesBorradores.push(mensaje)
+                self.mensajesBorradores.push(mensaje)
                                     
         return id_mensaje
 
@@ -155,6 +154,21 @@ class Sistema_Mensajes():
             file.write(line)
 
         return print(f"\nMensaje guardado con éxito en borradores.")
+    
+    def guardarLeidos(self, id_usuario, mensaje):
+        archivo_leidos = f"txt/{id_usuario}_ML.txt"
+        with open(archivo_leidos, "a") as file:
+            mensaje = mensaje.data
+            line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|leido\n"
+            file.write(line)
+
+    def guardarBorradoresPop(self, id_usuario):
+        archivo_leidos = f"txt/{id_usuario}_B.txt"
+        with open(archivo_leidos, "w") as file:
+            while self.mensajesBorradores.top() is not None:
+                mensaje = self.mensajesBorradores.pop()
+                line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|borrador\n"
+                file.write(line)
               
     def mostrarBandejaEntrada(self):
         print("\nBANDEJA DE ENTRADA\n")
@@ -200,17 +214,3 @@ class Sistema_Mensajes():
                 file.write(line)
                 mensaje = mensaje.next
                                      
-    def guardarLeidos(self, id_usuario, mensaje):
-        archivo_leidos = f"txt/{id_usuario}_ML.txt"
-        with open(archivo_leidos, "a") as file:
-            mensaje = mensaje.data
-            line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|leido\n"
-            file.write(line)
-
-    def guardarBorradoresPop(self, id_usuario):
-        archivo_leidos = f"txt/{id_usuario}_B.txt"
-        with open(archivo_leidos, "w") as file:
-            while self.mensajesBorradores.top() is not None:
-                mensaje = self.mensajesBorradores.pop()
-                line = f"0|{mensaje.nombre_emisor}|{mensaje.correo_emisor}|{mensaje.nombre_receptor}|{mensaje.correo_receptor}|{mensaje.titulo}|{mensaje.mensaje}|{mensaje.fecha}|borrador\n"
-                file.write(line)
